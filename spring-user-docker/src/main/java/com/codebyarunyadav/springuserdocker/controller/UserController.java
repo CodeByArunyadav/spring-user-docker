@@ -24,6 +24,14 @@ import lombok.AllArgsConstructor;
 public class UserController {
 
     private UserService userService;
+    
+    // Build Get All Users REST API
+    // http://localhost:8077/api/users
+    @GetMapping("test")
+    public String getTestMessage(){
+        String textmsg= "Welcome User to docker";
+        return textmsg;
+    }
 
     // build create User REST API
     @PostMapping
