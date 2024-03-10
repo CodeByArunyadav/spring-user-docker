@@ -1,0 +1,44 @@
+1. Create project as spring-user-docker
+2. Change properties file as required for docker and create Dockerfile
+3. Build project.
+4. Copy jar file to target docker machine folder.
+5. Pull mysql and run with -e environment variable and setup database as below.
+	  $ docker pull mysql:latest
+	  $ docker run -p 3307:3306 --name mysqlcontainer -e MYSQL_ROOT_PASSWORD=admin -e MYSQL_DATABASE=db_user -d mysql
+6. Create an network bridge that docker container communicate.
+      $ docker network create user-mysql-net
+ 	  $ docker network connect user-mysql-net mysqlcontainer
+7. build image of application as 
+      $ docker build -t spring-user-docker:v2 .
+8. Now run build image in container with mysql environment variable parametrise in properties variable.
+      $ docker run -p 8078:8077 --name usercontainer --net user-mysql-net -e MYSQL_HOST=mysqlcontainer -e MYSQL_PORT=3306 -e MYSQL_DB_NAME:db_user -e MYSQL_USER=root -e MYSQL_PASSWORD:admin -d spring-user-docker:v2
+
+
+some commands:
+ docker logs 6bc0ff252390
+ docker inspect 6bc0ff252390
+ docker network inspect user-mysql-net
+
+
+Request and response
+
+[
+    {
+        "id": 1,
+        "firstName": "Aavika",
+        "lastName": "yadav",
+        "email": "Aavika@gmail.com"
+    },
+    {
+        "id": 2,
+        "firstName": "arun",
+        "lastName": "yadav",
+        "email": "Arun@gmail.com"
+    },
+    {
+        "id": 3,
+        "firstName": "Ramesh",
+        "lastName": "Prakesh",
+        "email": "ramesh@gmail.com"
+    }
+]
