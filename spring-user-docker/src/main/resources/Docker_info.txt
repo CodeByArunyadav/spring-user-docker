@@ -20,6 +20,9 @@ some commands:
  docker network inspect user-mysql-net
 
 
+http://localhost:8077/api/users
+http://localhost:8077/api/users/1
+http://localhost:8077/api/users
 Request and response
 
 [
